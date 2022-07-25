@@ -1,0 +1,26 @@
+.main-component__head {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 1140px;
+  border-bottom: 1px solid rgba(218, 218, 218, 1);
+  margin: auto;
+}
+
+.main-component__title {
+  margin: 0;
+  color: rgba(255, 255, 255, 1);
+  font-size: 22px;
+  line-height: 27px;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  padding-bottom: 23px;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .main-component__title {
+    font-size: 18px;
+    line-height: 22px;
+    padding-bottom: 28px;
+  }
+}

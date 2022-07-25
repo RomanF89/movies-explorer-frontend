@@ -1,0 +1,6 @@
+@import url(../src/vendor/normalize.css);
+@import url(../src/vendor/inter/inter.css);
+
+.page {
+  background-color: rgba(32, 32, 32, 1);
+}

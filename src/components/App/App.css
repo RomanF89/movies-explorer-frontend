@@ -1,0 +1,7 @@
+.App {
+    margin: 0 auto;
+    font-family: 'Inter', Arial, sans-serif;
+    text-rendering: optimizeLegibility;
+    font-style: normal;
+    background-color: rgba(32, 32, 32, 1);
+  }
