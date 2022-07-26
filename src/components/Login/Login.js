@@ -6,7 +6,7 @@ import '../Authentication/Authentication.css'
 
 function Login() {
   return (
-    <Authentication>
+    <Authentication title={'Рады видеть!'} >
         <form className='authentication__form authentication__form_type_login' name='login-form' >
           <fieldset className='authentication__fields authentication__fields_type_login'>
             <div className='authentication__field'>

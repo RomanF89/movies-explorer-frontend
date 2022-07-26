@@ -11,7 +11,7 @@ function Authentication(props) {
           <Link className='authentication__head-link' to='/'>
             <img className='authentication__head-image' src={logo} alt='Логотип'></img>
           </Link>
-          <h2 className='authentication__title'>Добро пожаловать!</h2>
+          <h2 className='authentication__title'>{props.title}</h2>
         </div>
         {props.children}
       </div>

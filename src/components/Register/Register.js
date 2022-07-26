@@ -7,7 +7,7 @@ import '../Authentication/Authentication.css'
 
 function Register() {
   return (
-    <Authentication>
+    <Authentication title={'Добро пожаловать!'}>
         <form className='authentication__form authentication__form_type_regisrer' name='register-form' >
           <fieldset className='authentication__fields'>
             <div className='authentication__field'>
