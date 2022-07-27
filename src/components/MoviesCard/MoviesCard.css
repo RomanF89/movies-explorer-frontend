@@ -1,0 +1,142 @@
+.card {
+  width: 360px;
+  height: 319px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(34, 34, 34, 1);
+  border-radius: 6px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+}
+
+.card__info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 54px;
+}
+
+.card__title {
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 1);
+  padding-left: 18px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.card__duration {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 400;
+  color: rgba(139, 139, 139, 1);
+  padding: 0 18px 0 14px;
+  white-space: nowrap;
+}
+
+.card__image {
+  width: 360px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card__save-button {
+  width: 100px;
+  height: 29px;
+  background-color: rgba(49, 49, 49, 1);
+  font-size: 12px;
+  line-height: 11px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+  border-radius: 30px;
+  border: none;
+  align-self: center;
+  margin: auto;
+  transition: opacity .5s ease-in;
+  cursor: pointer;
+  padding: 0;
+}
+
+.card__save-button:hover {
+  opacity: 80%;
+}
+
+.card__save-button_saved {
+  background-image: url(../../images/saved.svg);
+  font-size: 0;
+}
+
+.card__save-button_delete {
+  width: 100px;
+  height: 29px;
+  background-color: rgba(49, 49, 49, 1);
+  background-image: url('../../images/deleteButton.svg');
+  border-radius: 30px;
+  border: none;
+  align-self: center;
+  margin: auto;
+  transition: opacity .5s ease-in;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0;
+}
+
+.card__save-button_delete:hover {
+  opacity: 80%;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .card {
+    width: 342px;
+    height: 309px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .card__image {
+    width: 342px;
+    height: 190px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .card__duration {
+    padding: 0 18px 0 12px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .card {
+    width: 300px;
+    height: 271px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .card__image {
+    width: 300px;
+    height: 168px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .card__title {
+    font-size: 12px;
+    padding-left: 14px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .card__duration {
+    font-size: 10px;
+    padding: 0 14px 0 14px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .card__info {
+    height: 46px;
+  }
+}

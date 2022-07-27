@@ -1,0 +1,129 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(32, 32, 32, 1);
+  padding: 79px 30px 20px 30px;
+}
+
+.footer__title {
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 400;
+  color: rgba(139, 139, 139, 1);
+  text-align: center;
+  margin: 0;
+  padding: 0 0 20px 0;
+}
+
+.footer__title-line {
+  width: 100%;
+  max-width: 1140px;
+  height: 1px;
+  background-color: rgba(66, 66, 66, 1);
+  margin: auto;
+}
+
+.footer__info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1140px;
+  margin: auto;
+  color: rgba(255, 255, 255, 1);
+}
+
+.footer__copyright {
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 400;
+  margin: 0;
+  padding: 20px 0 0 0;
+}
+
+.footer__links {
+  display: flex;
+  flex-direction: row;
+  padding: 20px 0 0 0;
+  margin: 0;
+}
+
+.footer__links-item {
+  text-decoration: none;
+  list-style: none;
+  padding: 0 20px 0 0;
+  transition: opacity .5s ease-in;
+  cursor: pointer;
+}
+
+.footer__links-item:hover {
+  opacity: 70%;
+}
+
+.footer__links-item:last-child {
+  padding: 0;
+}
+
+.footer__link {
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+  text-decoration: none;
+  list-style: none;
+}
+
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .footer {
+    padding: 70px 10px 10px 10px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .footer__title {
+    font-size: 12px;
+    line-height: 15px;
+    padding: 0 0 21px 0;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .footer__info {
+    flex-direction: column;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .footer__links {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 30px 0 0 0;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .footer__links-item {
+    padding: 0 0 12px 0;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .footer__link {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
+
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .footer__copyright {
+    order: 4;
+    text-align: center;
+    color: rgba(139, 139, 139, 1);
+    font-size: 12px;
+    line-height: 15px;
+    padding: 30px 0 0 0;
+  }
+}
