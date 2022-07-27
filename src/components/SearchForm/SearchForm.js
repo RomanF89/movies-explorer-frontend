@@ -4,7 +4,7 @@ function SearchForm() {
   return (
     <div className='search-films'>
       <form className='search-films__form' name='search-form'>
-        <input className='search-films__input' id='search-films' name='search' type='search' placeholder='Фильм'></input>
+        <input className='search-films__input' id='search-films' name='search' type='search' placeholder='Фильм' required={true} ></input>
         <div className='search-films__search-button-area'>
           <button className='search-films__search-button' type='submit' aria-label='Поиск фильмов'></button>
         </div>
