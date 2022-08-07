@@ -3,9 +3,14 @@ import './Header.css'
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 
-function Header({ headerTheme, location }) {
+function Header({ headerTheme, location, loggedIn, handleNavigationPopup }) {
+
 
   const currentLocation = location.pathname;
+
+  function openHeaderMenu () {
+    handleNavigationPopup(true);
+  }
 
   if (headerTheme === 'main') {
     return (
@@ -14,10 +19,17 @@ function Header({ headerTheme, location }) {
           <Link className='header__logo-link' to='/'>
             <img className='header__logo' src={logo} alt='Логотип' />
           </Link>
-          <div className='header__auth'>
-            <Link className='header__registration-link' to='/sign-up'>Регистрация</Link>
-            <Link className='header__login-link' to='/sign-in'>Войти</Link>
+          { loggedIn ? <div className='header__navigation header__navigation_type_active'>
+            <Link className={`header__navigation-link
+              ${currentLocation === '/movies' ? 'header__navigation-link_type_active' : ''}`} to='/movies'>Фильмы</Link>
+            <Link className={`header__navigation-link
+              ${currentLocation === '/saved-movies' ? 'header__navigation-link_type_active' : ''}`} to='/saved-movies'>Сохраненные фильмы</Link>
           </div>
+            : <div className='header__auth'>
+              <Link className='header__registration-link' to='/sign-up'>Регистрация</Link>
+              <Link className='header__login-link' to='/sign-in'>Войти</Link>
+            </div>
+          }
         </div>
       </header>
     )
@@ -41,7 +53,7 @@ function Header({ headerTheme, location }) {
               <div className='header__auth-image' />
             </Link>
           </div>
-          <button className='header__menu'></button>
+          <button onClick={openHeaderMenu} className='header__menu'></button>
         </div>
       </header>
     )
