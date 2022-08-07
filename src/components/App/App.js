@@ -258,9 +258,9 @@ function App({ location }) {
     resetMessages();
   }, [currentLocation]);
 
-  // useEffect(() => {
-  //   tokenCheck();
-  // }, []);
+  useEffect(() => {
+    tokenCheck();
+  }, []);
 
   useEffect(() => {
     if (loggedIn) {
