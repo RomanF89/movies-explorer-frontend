@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://movies89api.nomorepartiesxyz.ru';
+export const BASE_URL = 'https://movies89api.nomorepartiesxyz.ru/api';
 
 const checkResponse = (response) => {
   console.log('response ok: ', response);
