@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://movies89api.nomorepartiesxyz.ru/api';
+export const BASE_URL = 'https://movies89api.nomorepartiesxyz.ru';
 
 const checkResponse = (response) => {
   console.log('response ok: ', response);
@@ -37,11 +37,11 @@ export const login = (email, password) => {
 export const getCurrentUser = () => {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
-    credentials: 'include',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-    }
+    },
+    credentials: 'include',
   })
     .then(res => res.json())
 }
