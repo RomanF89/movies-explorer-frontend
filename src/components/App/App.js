@@ -121,7 +121,7 @@ function App({ location }) {
   const handleRegister = (name, email, password) => {
     register(name, email, password)
       .then((res) => {
-        history.push('/movies');
+        history.push('/sign-in');
       })
       .catch((err) => {
         console.log(err);
