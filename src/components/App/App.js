@@ -32,6 +32,7 @@ function App({ location }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
+  const [savedMoviesFromRequest , setSavedMoviesFromRequest] = useState([]);
   const [isNavigationPopupOpen, setIsNavigationPopupOpen] = useState(false);
 
   const currentSearchValue = localStorage.getItem('request');
@@ -89,7 +90,7 @@ function App({ location }) {
     }
     const searchData = data.toLowerCase().split(' ').filter(Boolean);
 
-    let currentMovies = savedMovies.filter(m =>
+    let currentMovies = savedMoviesFromRequest.filter(m =>
       searchData.some(searchItem =>
         ((m.nameRU ? ((m.nameRU.match(searchReg).join('').toLowerCase().split(' ')).some(movieItem => movieItem.startsWith(searchItem))) : ''))
         || ((m.nameEN ? ((m.nameEN.match(searchReg).join('').toLowerCase().split(' ')).some(movieItem => movieItem.startsWith(searchItem))) : ''))
@@ -112,6 +113,7 @@ function App({ location }) {
     getSavedMovies()
       .then((res) => {
         setSavedMovies(res);
+        setSavedMoviesFromRequest(res);
       })
       .catch((err) => {
         console.log(err);

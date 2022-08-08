@@ -43,7 +43,7 @@ export const getCurrentUser = () => {
     },
     credentials: 'include',
   })
-    .then(checkResponse)
+    .then(checkResponse);
 }
 
 export const updateProfile = (name, email) => {

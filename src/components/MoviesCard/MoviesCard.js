@@ -7,6 +7,7 @@ function MoviesCard({ title, movieDuration, imgLink, movie, handleSaveMovie, han
 
   let country, director, duration, year, description, image, trailerLink, nameRU, nameEN, id, thumbnail, imageLink, currentMovie, isLiked, isButtonThemeDelete;
 
+
   if (savedMovie) {
     ({ country, director, duration, year, description, image, trailerLink, nameRU, nameEN, id } = savedMovie)
     thumbnail = savedMovie.thumbnail;
@@ -24,6 +25,11 @@ function MoviesCard({ title, movieDuration, imgLink, movie, handleSaveMovie, han
   }
 
   const handleSave = () => {
+    if(nameRU === '') {
+      nameRU = ' '
+    } else if (nameEN === '') {
+      nameEN = ' '
+    }
     handleSaveMovie(country, director, duration, year, description, imageLink, trailerLink, nameRU, nameEN, thumbnail, id)
   }
 
