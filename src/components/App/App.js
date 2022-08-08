@@ -159,6 +159,7 @@ function App({ location }) {
         console.log(res)
         setLoggedIn(false);
         history.push('/');
+        localStorage.clear();
       })
       .catch(err => {
         console.log(err);
