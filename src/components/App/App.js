@@ -40,8 +40,6 @@ function App({ location }) {
 
   const searchReg = /[\w\-а-я\sё]/gi;
 
-  console.log(movies)
-
   const getMoviesFromRequest = (data, durationStatus) => {
     resetMessages();
     if (data === ('')) {
