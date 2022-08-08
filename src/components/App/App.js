@@ -40,6 +40,8 @@ function App({ location }) {
 
   const searchReg = /[\w\-а-я\sё]/gi;
 
+  console.log(movies)
+
   const getMoviesFromRequest = (data, durationStatus) => {
     resetMessages();
     if (data === ('')) {
@@ -160,6 +162,7 @@ function App({ location }) {
         setLoggedIn(false);
         history.push('/');
         localStorage.clear();
+        setMovies([]);
       })
       .catch(err => {
         console.log(err);
