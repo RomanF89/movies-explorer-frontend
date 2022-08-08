@@ -49,8 +49,6 @@ function App({ location }) {
     const searchData = data.toLowerCase().split(' ').filter(Boolean);
     setPreloader(true);
 
-    console.log(movies)
-
     getMovies()
       .then((res) => {
         const movies = res;

@@ -12,8 +12,6 @@ function MoviesCardList({ movies, isSavedMoviesTheme, isPreloaderActive, searchE
   const currentMoviesValue = (windowWidth >= 320 & windowWidth <= 480) ? 5 : (windowWidth >= 481 & windowWidth <= 768) ? 8 : 12;
   const moreMoviesValue = (windowWidth >= 320 & windowWidth <= 480) ? 1 : (windowWidth >= 481 & windowWidth <= 768) ? 2 : 3;
 
-  console.log(movies)
-
   const [itemsToShow, setItemsToShow] = useState(currentMoviesValue);
 
   function moreButtonHandler() {
