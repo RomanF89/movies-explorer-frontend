@@ -6,7 +6,6 @@ import './MoviesCardList.css';
 
 function MoviesCardList({ movies, isSavedMoviesTheme, isPreloaderActive, searchErrMessage , handleSaveMovie, handleDeleteMovie ,savedMovies ,savedMoviesList}) {
 
-
   const windowWidth = window.screen.width;
   const baseUrl = 'https://api.nomoreparties.co';
 
@@ -49,7 +48,7 @@ function MoviesCardList({ movies, isSavedMoviesTheme, isPreloaderActive, searchE
         <Preloader isPreloaderActive={isPreloaderActive} />
         <span className='movies__error-message' >{searchErrMessage}</span>
         <div className='movies__cards'>
-          {
+          { movies ?
             movies.slice(0, itemsToShow).map(item => (
               <MoviesCard
                 savedMovies={savedMovies}
@@ -61,14 +60,15 @@ function MoviesCardList({ movies, isSavedMoviesTheme, isPreloaderActive, searchE
                 imgLink={`${baseUrl}${item.image.url}`}
                 key={item.id}
               />
-            ))
+            )) : ''
           }
         </div>
+        { movies ?
         <button onClick={moreButtonHandler}
           className={`movies__more-button ${movies.length > currentMoviesValue ? 'movies__more-button_type_enabled' : ''}
           ${movies.length <= itemsToShow ? 'movies__more-button_type_disabled' : ''} `}
           type='button' aria-label='Еще'>Еще
-        </button>
+        </button> : '' }
       </section>
     )
   }
