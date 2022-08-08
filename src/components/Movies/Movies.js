@@ -10,7 +10,7 @@ function Movies({movies, isPreloaderActive, searchErrMessage, handleSaveMovie, h
         savedMovies={savedMovies}
         movies={movies}
         isPreloaderActive={isPreloaderActive}
-        searchErrorMessage={searchErrMessage} />
+        searchErrMessage={searchErrMessage} />
     </section>
   )
 }

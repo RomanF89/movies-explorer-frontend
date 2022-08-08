@@ -69,7 +69,8 @@ function App({ location }) {
         } else if (!durationStatus) {
           setMovies(currentMovies);
           localStorage.setItem('movies', JSON.stringify(currentMovies))
-        } else if (currentMovies.length === 0) {
+        }
+        if (currentMovies.length === 0) {
           setSearchErrMessage('Ничего не найдено');
         }
         localStorage.setItem('request', data)
@@ -98,7 +99,6 @@ function App({ location }) {
         ? m : '')
     if (currentMovies.length === 0) {
       setSearchErrMessage('Ничего не найдено');
-      return
     }
     if (durationStatus) {
       const shortMovies = currentMovies.filter((movie) => movie.duration <= 40);
