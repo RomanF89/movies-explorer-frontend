@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Authentication from '../Authentication/Authentication'
 import '../Authentication/Authentication.css'
 import UserFormValidation from '../UserFormValidation/UserFormValidation';
+import { EmailRegExp } from '../../utils/Constants';
 
 
 function Login({ handleLogin, loginErrMessage }) {
@@ -10,8 +11,18 @@ function Login({ handleLogin, loginErrMessage }) {
 
   const { values, handleChange, errors, isValid, resetForm } = UserFormValidation({
     password: (value) => {
-      if (value.length < 4) {
+      if (!value) {
+        return 'Необходимо заполнить это поле'
+      } else if (value.length < 4) {
         return 'Минимальное количество символов - 4'
+      }
+      return '';
+    },
+    email: (value) => {
+      if (!value) {
+        return 'Необходимо заполнить это поле'
+      } else if (!EmailRegExp.test(value)) {
+        return 'Поле не соотвествует адресу электронной почты'
       }
       return '';
     }

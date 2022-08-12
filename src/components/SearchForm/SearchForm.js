@@ -3,12 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 
 
-function SearchForm({handleSubmitSearchForm, moviesErrMessage, currentSearchValue}) {
+function SearchForm({ location, handleSubmitSearchForm, moviesErrMessage, currentSearchValue, durationStatus, changeDurationStatus, savedMoviesLastSearch }) {
 
-  const savedDurationStatus = JSON.parse(localStorage.getItem('durationStatus'))
-
-  const [ searchData, setSearchData] = useState('');
-  const [ durationStatus, setDurationStatus] = useState(savedDurationStatus);
+  const [searchData, setSearchData] = useState('');
+  const [currentDurationStatus, setCurrentDurationStatus] = useState(false);
+  const currentLocation = location.pathname;
 
   function onChangeSearch(e) {
     setSearchData(e.target.value);
@@ -16,35 +15,39 @@ function SearchForm({handleSubmitSearchForm, moviesErrMessage, currentSearchValu
 
   function handleSubmit(e) {
     e.preventDefault();
-    handleSubmitSearchForm(searchData, durationStatus);
+    handleSubmitSearchForm(searchData, currentDurationStatus);
   }
 
-  function changeDurationStatus () {
-    if (durationStatus) {
-      setDurationStatus(false);
-    } else {
-      setDurationStatus(true)
+  function changeDurationStatuss() {
+    if (currentDurationStatus) {
+      setCurrentDurationStatus(false);
+    } else if (!currentDurationStatus) {
+      setCurrentDurationStatus(true)
+    }
+    // Фильмы не фильтруются при изменении значения поискового запроса
+    if (searchData === (currentSearchValue || savedMoviesLastSearch)) {
+      changeDurationStatus(currentLocation);
     }
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     setSearchData(currentSearchValue)
-  },[currentSearchValue])
+  }, [])
 
-  useEffect(()=> {
-    localStorage.setItem('durationStatus', durationStatus )
-  },[durationStatus])
+  useEffect(() => {
+    setCurrentDurationStatus(durationStatus)
+  }, [])
 
   return (
     <div className='search-films'>
       <form className='search-films__form' name='search-form' onSubmit={handleSubmit}>
-        <input className='search-films__input' id='search-films' name='search' type='text' placeholder='Фильм' defaultValue={currentSearchValue} onChange={onChangeSearch} ></input>
+        <input className='search-films__input' id='search-films' name='search' type='text' placeholder='Фильм' defaultValue={currentSearchValue} onChange={onChangeSearch}></input>
         <div className='search-films__search-button-area'>
           <button className='search-films__search-button' type='submit' aria-label='Поиск фильмов'></button>
         </div>
         <div className='search-films__switch-button-area'>
           <div className='search-films__buttons-separator'></div>
-          <button className={`search-films__switch-button ${!durationStatus ? 'search-films__switch-button_type_off' : ''}`} onClick={changeDurationStatus} type='button' aria-label='Переключиться на короткометражки'></button>
+          <button className={`search-films__switch-button ${!currentDurationStatus ? 'search-films__switch-button_type_off' : ''}`} onClick={changeDurationStatuss} type='button' aria-label='Переключиться на короткометражки'></button>
           <p className='search-films__button-title'>Короткометражки</p>
         </div>
       </form>

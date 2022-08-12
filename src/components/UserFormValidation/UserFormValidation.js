@@ -28,7 +28,7 @@ function UserFormValidation(customHandlers) {
     }, [setValues, setErrors, setIsvalid]
   );
 
-  return { values, handleChange, errors, isValid, resetForm ,setValues };
+  return { values, handleChange, errors, isValid, resetForm ,setValues ,setIsvalid };
 }
 
 export default UserFormValidation;

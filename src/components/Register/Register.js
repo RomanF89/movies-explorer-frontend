@@ -1,25 +1,40 @@
 import './Register.css';
 import { Link } from 'react-router-dom';
-import React, { useState, useEffect, useCallback } from 'react';
 import Authentication from '../Authentication/Authentication'
 import '../Authentication/Authentication.css'
 import UserFormValidation from '../UserFormValidation/UserFormValidation';
+import { NameRegExp, EmailRegExp } from '../../utils/Constants';
+
 
 
 function Register({handleRegister, registerErrMessage}) {
 
-  const nameReg = /^[а-яА-ЯёЁa-zA-Z0-9\s-]+$/
-
   const { values, handleChange, errors, isValid, resetForm } = UserFormValidation({
     password: (value) => {
-      if (value.length < 4) {
+      if (!value) {
+        return 'Необходимо заполнить это поле'
+      } else if (value.length < 2) {
         return 'Минимальное количество символов - 4'
       }
       return '';
     },
     name: (value) => {
-      if (!nameReg.test(value)) {
+      if (!value) {
+        return 'Необходимо заполнить это поле'
+      } else if (!NameRegExp.test(value)) {
         return 'Поле содержит недопустимые символы'
+      } else if (value.length < 2) {
+        return 'Минимальное количество символов - 2'
+      } else if (value.length > 30) {
+        return 'Максимальное количество символов - 30'
+      }
+      return '';
+    },
+    email: (value) => {
+      if (!value) {
+        return 'Необходимо заполнить это поле'
+      } else if (!EmailRegExp.test(value)) {
+        return 'Поле не соотвествует адресу электронной почты'
       }
       return '';
     }

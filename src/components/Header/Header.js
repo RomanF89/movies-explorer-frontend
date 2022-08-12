@@ -5,10 +5,9 @@ import { withRouter } from 'react-router-dom';
 
 function Header({ headerTheme, location, loggedIn, handleNavigationPopup }) {
 
-
   const currentLocation = location.pathname;
 
-  function openHeaderMenu () {
+  function openHeaderMenu() {
     handleNavigationPopup(true);
   }
 
@@ -19,11 +18,12 @@ function Header({ headerTheme, location, loggedIn, handleNavigationPopup }) {
           <Link className='header__logo-link' to='/'>
             <img className='header__logo' src={logo} alt='Логотип' />
           </Link>
-          { loggedIn ? <div className='header__navigation header__navigation_type_active'>
+          {loggedIn ? <div className='header__navigation header__navigation_type_active'>
             <Link className={`header__navigation-link
               ${currentLocation === '/movies' ? 'header__navigation-link_type_active' : ''}`} to='/movies'>Фильмы</Link>
             <Link className={`header__navigation-link
               ${currentLocation === '/saved-movies' ? 'header__navigation-link_type_active' : ''}`} to='/saved-movies'>Сохраненные фильмы</Link>
+              <Link to='/profile' className='header__profile-link'>Аккаунт</Link>
           </div>
             : <div className='header__auth'>
               <Link className='header__registration-link' to='/sign-up'>Регистрация</Link>

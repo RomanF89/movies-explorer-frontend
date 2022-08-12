@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import Preloader from '../Preloader/Preloader'
 import './MoviesCardList.css';
+import { BaseUrl} from '../../utils/Constants';
 
 
 function MoviesCardList({ movies, isSavedMoviesTheme, isPreloaderActive, searchErrMessage , handleSaveMovie, handleDeleteMovie ,savedMovies ,savedMoviesList}) {
 
   const windowWidth = window.screen.width;
-  const baseUrl = 'https://api.nomoreparties.co';
-
   const currentMoviesValue = (windowWidth >= 320 & windowWidth <= 480) ? 5 : (windowWidth >= 481 & windowWidth <= 768) ? 8 : 12;
   const moreMoviesValue = (windowWidth >= 320 & windowWidth <= 480) ? 1 : (windowWidth >= 481 & windowWidth <= 768) ? 2 : 3;
 
@@ -56,7 +55,7 @@ function MoviesCardList({ movies, isSavedMoviesTheme, isPreloaderActive, searchE
                 movie={item}
                 title={item.nameRU}
                 movieDuration={item.duration}
-                imgLink={`${baseUrl}${item.image.url}`}
+                imgLink={`${BaseUrl}${item.image.url}`}
                 key={item.id}
               />
             )) : ''

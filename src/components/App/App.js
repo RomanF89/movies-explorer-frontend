@@ -17,12 +17,17 @@ import SearchForm from '../SearchForm/SearchForm';
 import { getMovies } from '../../utils/MoviesApi';
 import { register, login, getCurrentUser, updateProfile, unlogin, saveMovie, deleteMovie, getSavedMovies } from '../../utils/MainApi';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import { SearchRegExp } from '../../utils/Constants';
 
 
 function App({ location }) {
 
+
   const [movies, setMovies] = useState([]);
-  const [preloader, setPreloader] = useState(false);
+  const [currentMovies, setCurrentMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
+  const [savedMoviesFromRequest, setSavedMoviesFromRequest] = useState([]);
+  const [currentSavedMovies, setCurrentSavedMovies] = useState([])
   const [searchErrMessage, setSearchErrMessage] = useState('');
   const [moviesErrMessage, setMoviesErrMessage] = useState('');
   const [registerErrMessage, setRegisterErrMessage] = useState('');
@@ -31,24 +36,26 @@ function App({ location }) {
   const [profileSuccessMessage, setProfileSuccessMessage] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState([]);
-  const [savedMovies, setSavedMovies] = useState([]);
-  const [savedMoviesFromRequest , setSavedMoviesFromRequest] = useState([]);
+  const [preloader, setPreloader] = useState(false);
   const [isNavigationPopupOpen, setIsNavigationPopupOpen] = useState(false);
+  const [savedMoviesLastSearch, setSavedMoviesLastSearch] = useState('')
+  const [savedMoviesDurationStatus, setSavedMoviesDurationStatus] = useState(false);
+  const [durationStatus, setDurationStatus] = useState(false);
 
+  const savedDurationStatus = JSON.parse(localStorage.getItem('durationStatus'))
   const currentSearchValue = localStorage.getItem('request');
+  const storageMovies = JSON.parse(localStorage.getItem('movies'))
   const currentLocation = location.pathname;
   const history = useHistory();
 
-  const searchReg = /[\w\-а-я\sё]/gi;
-
   const getMoviesFromRequest = (data, durationStatus) => {
     resetMessages();
-    if (data === ('')) {
+    if (!data) {
       setMoviesErrMessage('Нужно ввести ключевое слово')
       return
     }
-    const searchData = data.toLowerCase().split(' ').filter(Boolean);
     setPreloader(true);
+    const searchData = data.toLowerCase().split(' ').filter(Boolean);
 
     getMovies()
       .then((res) => {
@@ -58,10 +65,16 @@ function App({ location }) {
       .then((movies) => {
         let currentMovies = movies.filter(m =>
           searchData.some(searchItem =>
-            ((m.nameRU ? ((m.nameRU.match(searchReg).join('').toLowerCase().split(' ')).some(movieItem => movieItem.startsWith(searchItem))) : ''))
-            || ((m.nameEN ? ((m.nameEN.match(searchReg).join('').toLowerCase().split(' ')).some(movieItem => movieItem.startsWith(searchItem))) : ''))
+            ((m.nameRU ? ((m.nameRU.match(SearchRegExp).join('').toLowerCase().split(' ')).some(movieItem => movieItem.startsWith(searchItem))) : ''))
+            || ((m.nameEN ? ((m.nameEN.match(SearchRegExp).join('').toLowerCase().split(' ')).some(movieItem => movieItem.startsWith(searchItem))) : ''))
           )
             ? m : '')
+
+        setCurrentMovies(currentMovies);
+        localStorage.setItem('stateMovies', JSON.stringify(currentMovies))
+        setDurationStatus(durationStatus);
+        localStorage.setItem('durationStatus', durationStatus)
+
         if (durationStatus) {
           const shortMovies = currentMovies.filter((movie) => movie.duration <= 40);
           setMovies(shortMovies)
@@ -83,20 +96,25 @@ function App({ location }) {
       .finally(() => setPreloader(false))
   }
 
+
   const searchSavedMovies = (data, durationStatus) => {
     resetMessages();
-    if (data === ('')) {
+    if (!data) {
       setMoviesErrMessage('Нужно ввести ключевое слово')
       return
     }
+    setSavedMoviesLastSearch(data);
     const searchData = data.toLowerCase().split(' ').filter(Boolean);
 
     let currentMovies = savedMoviesFromRequest.filter(m =>
       searchData.some(searchItem =>
-        ((m.nameRU ? ((m.nameRU.match(searchReg).join('').toLowerCase().split(' ')).some(movieItem => movieItem.startsWith(searchItem))) : ''))
-        || ((m.nameEN ? ((m.nameEN.match(searchReg).join('').toLowerCase().split(' ')).some(movieItem => movieItem.startsWith(searchItem))) : ''))
+        ((m.nameRU ? ((m.nameRU.match(SearchRegExp).join('').toLowerCase().split(' ')).some(movieItem => movieItem.startsWith(searchItem))) : ''))
+        || ((m.nameEN ? ((m.nameEN.match(SearchRegExp).join('').toLowerCase().split(' ')).some(movieItem => movieItem.startsWith(searchItem))) : ''))
       )
-        ? m : '')
+        ? m : '');
+    setCurrentSavedMovies(currentMovies);
+    setSavedMoviesDurationStatus(durationStatus);
+
     if (currentMovies.length === 0) {
       setSearchErrMessage('Ничего не найдено');
     }
@@ -106,7 +124,6 @@ function App({ location }) {
     } else if (!durationStatus) {
       setSavedMovies(currentMovies);
     }
-    localStorage.setItem('request', data)
   }
 
   const getSavedMoviesFromRequest = () => {
@@ -123,7 +140,9 @@ function App({ location }) {
   const handleRegister = (name, email, password) => {
     register(name, email, password)
       .then((res) => {
-        history.push('/sign-in');
+        if (res) {
+          handleLogin(email, password);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -193,9 +212,7 @@ function App({ location }) {
   }
 
   const handleUpdateProfile = (name, email) => {
-    console.log(name, email)
     resetMessages()
-
     updateProfile(name, email)
       .then((res) => {
         setCurrentUser(res);
@@ -248,22 +265,95 @@ function App({ location }) {
     setLoginErrMessage(' ');
   }
 
-  useEffect(() => {
-    const movies = JSON.parse(localStorage.getItem('movies'))
-    setMovies(movies);
-  }, []);
+  // Изменение и сохранение статуса чекбокса в зависимости от страницы поиска
+  const changeDurationStatus = (currentLocation) => {
+    if (currentLocation === '/saved-movies') {
+      if (savedMoviesDurationStatus) {
+        setSavedMoviesDurationStatus(false);
+      } else if (!savedMoviesDurationStatus) {
+        setSavedMoviesDurationStatus(true)
+      }
+    }
+    if (currentLocation === '/movies') {
+      if (durationStatus) {
+        setDurationStatus(false);
+        localStorage.setItem('durationStatus', false)
+      } else if (!durationStatus) {
+        setDurationStatus(true)
+        localStorage.setItem('durationStatus', true)
+      }
+    }
+  }
 
+  // Фильтрация фильмов в зависимости от статуса чекбокса
+  const changeMoviesFilter = () => {
+    if (currentMovies.length !== 0) {
+      if (durationStatus) {
+        const shortMovies = currentMovies.filter((movie) => movie.duration <= 40);
+        setMovies(shortMovies)
+        localStorage.setItem('movies', JSON.stringify(shortMovies))
+      } else if (!durationStatus) {
+        setMovies(currentMovies);
+        localStorage.setItem('movies', JSON.stringify(currentMovies))
+      }
+    } else if (movies.length !== 0) {
+      const stateMovies = JSON.parse(localStorage.getItem('stateMovies'))
+      if (durationStatus) {
+        const shortMovies = stateMovies.filter((movie) => movie.duration <= 40);
+        setMovies(shortMovies)
+        localStorage.setItem('movies', JSON.stringify(shortMovies))
+      } else if (!durationStatus) {
+        setMovies(stateMovies);
+        localStorage.setItem('movies', JSON.stringify(stateMovies))
+      }
+    }
+  }
+
+  // Фильтрация сохраненных фильмов в зависимости от статуса чекбокса
+  const changeSavedMoviesFilter = () => {
+    if (currentSavedMovies.length !== 0) {
+      if (savedMoviesDurationStatus === true) {
+        const shortMovies = currentSavedMovies.filter((movie) => movie.duration <= 40);
+        setSavedMovies(shortMovies)
+      } else {
+        setSavedMovies(currentSavedMovies);
+      }
+    }
+  }
+
+  //useEffect при изменении статуса чекбокса
+  useEffect(() => {
+    if (loggedIn) {
+      changeMoviesFilter();
+    }
+  }, [durationStatus])
+
+  useEffect(() => {
+    if (loggedIn) {
+      changeSavedMoviesFilter();
+    }
+  }, [savedMoviesDurationStatus])
 
   useEffect(() => {
     if (loggedIn) {
       getSavedMoviesFromRequest();
       setIsNavigationPopupOpen(false);
+      setCurrentSavedMovies([]);
+      setSavedMoviesDurationStatus(false);
     }
     resetMessages();
   }, [currentLocation]);
 
   useEffect(() => {
     tokenCheck();
+  }, []);
+
+  useEffect(() => {
+    setMovies(storageMovies);
+  }, []);
+
+  useEffect(() => {
+    setDurationStatus(savedDurationStatus);
   }, []);
 
   useEffect(() => {
@@ -294,6 +384,8 @@ function App({ location }) {
               handleNavigationPopup={handleNavigationPopup}>
             </Header>
             <SearchForm
+              changeDurationStatus={changeDurationStatus}
+              durationStatus={durationStatus}
               currentSearchValue={currentSearchValue}
               moviesErrMessage={moviesErrMessage}
               handleSubmitSearchForm={getMoviesFromRequest}>
@@ -319,8 +411,10 @@ function App({ location }) {
               handleNavigationPopup={handleNavigationPopup}>
             </Header>
             <SearchForm
+              savedMoviesLastSearch={savedMoviesLastSearch}
+              changeDurationStatus={changeDurationStatus}
               moviesErrMessage={moviesErrMessage}
-              currentSearchValue={currentSearchValue}
+              key={currentSearchValue}
               handleSubmitSearchForm={searchSavedMovies}>
             </SearchForm>
             <SavedMovies

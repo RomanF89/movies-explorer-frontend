@@ -2,24 +2,39 @@ import './Profile.css'
 import UserFormValidation from '../UserFormValidation/UserFormValidation';
 import React, { useContext, useEffect } from 'react';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { NameRegExp, EmailRegExp } from '../../utils/Constants';
 
 
 function Profile({handleUpdateProfile, handleSignOut, profileErrMessage, profileSuccessMessage}) {
 
-  const reg = /^[а-яА-ЯёЁa-zA-Z0-9\s-]+$/
   const currentUser = useContext(CurrentUserContext);
 
-  const { values, handleChange, errors, isValid, resetForm, setValues } = UserFormValidation({
+  const { values, handleChange, errors, isValid, resetForm, setValues , setIsvalid } = UserFormValidation({
     name: (value) => {
-      if (!reg.test(value)) {
+      if (!value) {
+        return 'Необходимо заполнить это поле'
+      } else if (!NameRegExp.test(value)) {
         return 'Поле содержит недопустимые символы'
+      } else if (value.length < 2) {
+        return 'Минимальное количество символов - 2'
+      } else if (value.length > 30) {
+        return 'Максимальное количество символов - 30'
+      }
+      return '';
+    },
+    email: (value) => {
+      if (!value) {
+        return 'Необходимо заполнить это поле'
+      } else if (!EmailRegExp.test(value)) {
+        return 'Поле не соотвествует адресу электронной почты'
       }
       return '';
     }
   });
 
+  const { name, email } = values;
+
   const handleSubmit = (e) => {
-    const { name, email } = values;
     e.preventDefault();
     handleUpdateProfile(name, email)
   }
@@ -27,6 +42,13 @@ function Profile({handleUpdateProfile, handleSignOut, profileErrMessage, profile
   useEffect(()=> {
     setValues(currentUser)
   },[currentUser])
+
+  useEffect(()=> {
+    if ((name === currentUser.name) & (email === currentUser.email)) {
+      setIsvalid(false);
+    }
+  },[values])
+
 
   return (
     <section className='profile'>
