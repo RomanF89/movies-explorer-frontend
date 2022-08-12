@@ -1,6 +1,4 @@
-// export const BASE_URL = 'https://movies89api.nomorepartiesxyz.ru/api';
-export const BASE_URL = 'http://localhost:3000';
-
+export const BASE_URL = 'https://movies89api.nomorepartiesxyz.ru/api';
 
 const checkResponse = (response) => {
   console.log('response ok: ', response);
