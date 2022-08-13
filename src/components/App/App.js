@@ -45,6 +45,7 @@ function App({ location }) {
   const savedDurationStatus = JSON.parse(localStorage.getItem('durationStatus'))
   const currentSearchValue = localStorage.getItem('request');
   const storageMovies = JSON.parse(localStorage.getItem('movies'))
+  const stateMovies = JSON.parse(localStorage.getItem('stateMovies'))
   const currentLocation = location.pathname;
   const history = useHistory();
 
@@ -289,25 +290,30 @@ function App({ location }) {
   const changeMoviesFilter = () => {
     if (currentMovies.length !== 0) {
       if (durationStatus) {
+        console.log('sss')
         const shortMovies = currentMovies.filter((movie) => movie.duration <= 40);
         setMovies(shortMovies)
         localStorage.setItem('movies', JSON.stringify(shortMovies))
       } else if (!durationStatus) {
+        console.log('sss')
         setMovies(currentMovies);
         localStorage.setItem('movies', JSON.stringify(currentMovies))
       }
-    } else if (movies.length !== 0) {
-      const stateMovies = JSON.parse(localStorage.getItem('stateMovies'))
+    } else if (movies) {
       if (durationStatus) {
+        console.log('sss')
         const shortMovies = stateMovies.filter((movie) => movie.duration <= 40);
         setMovies(shortMovies)
         localStorage.setItem('movies', JSON.stringify(shortMovies))
       } else if (!durationStatus) {
+        console.log('sss')
         setMovies(stateMovies);
         localStorage.setItem('movies', JSON.stringify(stateMovies))
       }
     }
   }
+
+  console.log(currentMovies.length !==0)
 
   // Фильтрация сохраненных фильмов в зависимости от статуса чекбокса
   const changeSavedMoviesFilter = () => {
