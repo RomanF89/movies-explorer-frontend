@@ -42,6 +42,10 @@
   object-fit: cover;
 }
 
+.card__image-link {
+  display: flex;
+}
+
 .card__save-button {
   width: 100px;
   height: 29px;

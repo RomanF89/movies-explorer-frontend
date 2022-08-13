@@ -1,24 +1,16 @@
 import './Movies.css';
-import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import MoviesCard from '../MoviesCard/MoviesCard';
 
-
-function Movies() {
+function Movies({movies, isPreloaderActive, searchErrMessage, handleSaveMovie, handleDeleteMovie, savedMovies}) {
   return (
     <section className='movies'>
-      <SearchForm></SearchForm>
       <MoviesCardList
-        cards={<>
-          <MoviesCard isSaved={true} />
-          <MoviesCard />
-          <MoviesCard />
-          <MoviesCard />
-          <MoviesCard />
-          <MoviesCard />
-          <MoviesCard isSaved={true} />
-        </>
-        } />
+        handleSaveMovie={handleSaveMovie}
+        handleDeleteMovie={handleDeleteMovie}
+        savedMovies={savedMovies}
+        movies={movies}
+        isPreloaderActive={isPreloaderActive}
+        searchErrMessage={searchErrMessage} />
     </section>
   )
 }

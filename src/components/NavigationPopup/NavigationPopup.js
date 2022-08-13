@@ -3,15 +3,18 @@ import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 
-function NavigationPopup({ location, isOpen }) {
+function NavigationPopup({ location, isOpen, handleNavigationPopup }) {
 
   const currentLocation = location.pathname;
 
+  function handleClose () {
+    handleNavigationPopup(false);
+  }
 
   return (
     <section className={`popup popup_type_navigation ${isOpen ? 'popup_opened' : ''}`}>
       <div className='popup__container'>
-        <button className='popup__close-button' type='button' aria-label='Закрыть' ></button>
+        <button className='popup__close-button' type='button' aria-label='Закрыть' onClick={handleClose} ></button>
         <div className='popup__navigation'>
           <Link className='popup__navigation-link' to='/'>Главная</Link>
           <Link className={`popup__navigation-link

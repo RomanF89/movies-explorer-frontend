@@ -1,7 +1,6 @@
 .search-films {
   display: flex;
   flex-direction: column;
-  width: 100%;
   max-width: 1140px;
   margin: auto;
   padding: 0 0 10px 0;
@@ -11,7 +10,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding: 70px 0 69px 0;
+  padding: 70px 0 0 0;
 }
 
 .search-films__input {
@@ -110,19 +109,52 @@
   max-width: 1140;
   height: 1px;
   background-color: rgba(66, 66, 66, 1);
-  margin: auto;
+  margin: 69px 0 0 0;
+}
+
+.search-films__error-message {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 400;
+  color: rgb(244, 111, 111);
+  padding: 10px 0 0 0;
+  text-align: center;
 }
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
   .search-films__form {
-    padding: 80px 0 109px 0;
+    padding: 80px 0 0 0;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .search-films__underline {
+    margin: 109px 0 0 0 ;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1200px) {
+  .search-films {
+    margin: 0 30px 0 30px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .search-films {
+    margin: 0 10px 0 10px;
   }
 }
 
 @media screen and (min-width: 320px) and (max-width: 767px) {
   .search-films__form {
     flex-wrap: wrap;
-    padding: 80px 0 45px 0;
+    padding: 80px 0 0 0;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .search-films__underline {
+    margin: 45px 0 0 0;
   }
 }
 
@@ -146,6 +178,12 @@
   .search-films__search-button-area {
     padding: 0 19px 0 46px;
     border-radius: 0px 9px 9px 0px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 368px) {
+  .search-films__search-button-area {
+    padding: 0 19px 0 19px;
   }
 }
 

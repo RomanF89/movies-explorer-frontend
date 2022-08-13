@@ -1,19 +1,14 @@
 import './SavedMovies.css'
-import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import MoviesCard from '../MoviesCard/MoviesCard';
 
-function SavedMovies() {
+function SavedMovies({savedMoviesList, handleDeleteMovie, searchErrMessage}) {
   return (
     <section className='movies'>
-      <SearchForm></SearchForm>
       <MoviesCardList
+        searchErrMessage={searchErrMessage}
         isSavedMoviesTheme={true}
-        cards={<>
-          <MoviesCard isButtonThemeDelete={true} />
-          <MoviesCard isButtonThemeDelete={true} />
-          <MoviesCard isButtonThemeDelete={true} />
-        </>}
+        savedMoviesList={savedMoviesList}
+        handleDeleteMovie={handleDeleteMovie}
       />
     </section>
   )

@@ -1,5 +1,5 @@
 import './AboutMe.css';
-import myPhoto from '../../images/myPhoto.svg'
+import myPhoto from '../../images/myPhoto.jpg'
 import MainComponentTitle from '../MainComponentTitle/MainComponentTitle';
 
 function AboutMe() {
